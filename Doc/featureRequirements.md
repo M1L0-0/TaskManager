@@ -8,6 +8,7 @@
 
 - Slack buffer for task in days (point reduction)
 - Priority level
+- Category (e.g. Self care / organization / essential)
 - Reminder Style
 - responsibility (assigned or at random)
 - trade tasks (for points or other tasks)
@@ -58,6 +59,7 @@
 
 ### Dashboard
 
+- task points (daily self care etc.)
 - Point balance
 - Tasks of the day
 - Looking forward to today

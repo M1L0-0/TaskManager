@@ -1,8 +1,3 @@
-import json
-
-from datetime import datetime
-
-
 class Task(object):
     class _Frequency(object):
         def __init__(self, scope, placements, hour) -> None:
@@ -10,16 +5,10 @@ class Task(object):
             self.placements = placements
             self.hour = hour
 
-        def get_dict(self):
-            return {'scope': self.scope, 'placements': self.placements, 'hour': self.hour}
-
-    class _Alarm:
-        def __init__(self, time, snoozeMax=0):
+    class _Alarm(object):
+        def __init__(self, time, snoozeMax=0) -> None:
             self.time = time
             self.snoozeMax = snoozeMax
-
-        def get_dict(self):
-            return {'time': self.time.strftime("%H:%M"), 'snooze': self.snoozeMax}
 
     def __init__(self, title, slack, due, category, daily_goal, assignee, severity, difficulty, prioretized, progressive, penalty, reward, alarms, frequency=None, milestones=None) -> None:
         self.title = title
@@ -36,18 +25,15 @@ class Task(object):
         self.reward = reward
         self.alarms = []
         for alarm in alarms:
-            self.alarms.append(self._Alarm(alarm[0], alarm[1]).get_dict())
+            self.alarms.append(self._Alarm(alarm[0], alarm[1]))
         self.milestones = []
         if milestones:
             self.milestones = milestones
         if frequency:
             self.frequency = self._Frequency(frequency[0], frequency[1], frequency[2])
+    
 
-    def get_dict(self):
-        return {'title': self.title, 'slack': self.slack, 'due': self.due.strftime("%m/%d/%Y, %H:%M:%S"), 'category': self.category, 'daily_goal': self.daily_goal, 'assignee': self.assignee, 'severity': self.severity, 'difficulty': self.difficulty, 'prioretized': self.prioretized, 'progressive': self.progressive, 'penalty': self.penalty, 'reward': self.reward, 'alarms': self.alarms, 'frequency': self.frequency.get_dict()}
-        
-
-class Calendar(Task):
+class Calendar(object):
     class _LookingForwardables(object):
         def _init__(self, name, description, date) -> None:
             self.name = name

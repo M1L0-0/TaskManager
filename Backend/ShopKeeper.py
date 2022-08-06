@@ -18,14 +18,20 @@ class ShopKeeper(object):
 
         return self.items
 
-    def add_item(self, name, description, base_price):
+    def add_item(self, item):
         db = self.operator.db
-
-        item = self.operator.base.classes.items
-        new_item = item(name, description, base_price, self._determin_price(base_price))
-        db.session.add(new_item)
+        db.session.add(item)
         db.commit()
-        return new_item
+        return item
+
+    def map_item(self, request):
+        item = request['item']
+        name = item['name']
+        description = item['description']
+        base_price = item['base_price']
+        price = self._determin_price(base_price)
+        return self.operator.base.classes.items(name=name, description=description, base_price=base_price, price=price)
+
 
     def _determin_price(self, base_price):
         price = base_price

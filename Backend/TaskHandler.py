@@ -40,7 +40,7 @@ class TaskHandler (object):
                             [row.frequencies.scope, row.frequencies.placements, row.frequencies.hour],
                             milestones=recursive_ids)
             self.task_list.append(new_task)
-        return {'task_list': [task.get_dict() for task in self.task_list]}
+        return self.task_list
 
     def get_category(self, category):
         session = self.operator.session

@@ -47,37 +47,34 @@ def setup():
     return ''
 
 
-@app.route('/bou/<name>', methods=['GET'])
+@app.route('/bous/<name>', methods=['GET'])
 def bou(name):
-    return operator.format_return(operator.return_bou(name))
+    return operator(operator.return_bou(name))
 
-@app.route('/shop', methods=['UPDATE'])
+@app.route('/shops', methods=['UPDATE'])
 def shop():
     return ''
 
-@app.route('/shop/items', methods=['SET', 'GET', 'UPDATE'])
+@app.route('/shops/items', methods=['SET', 'GET', 'UPDATE'])
 def items():
     if request.method == 'GET':
-        return operator.format_return(operator.return_all_items())
+        return operator(operator.return_all_items())
     elif request.method == 'SET':
-        return operator.format_return(operator.add_item())
+        return operator(operator.add_item())
     else:
         pass
     return ''
 
-@app.route('/calendars/<bou>', methods=['SET', 'GET', 'UPDATE'])
+@app.route('/calendars/<bou>', methods=['GET'])
 def calendars(bou):
-    task_list = operator.update_task_list()
-    looking_forwardables = operator.return_looking_forwardables(bou)
-    bou = operator.return_bou(bou)
-    return ''
+    return operator(operator.return_calendar(bou))
     
 @app.route('/tasks', methods=['SET', 'GET'])
 def tasks():
     if request.method == 'GET':
-        return operator.format_return(operator.update_task_list())
+        return operator(operator.return_task_list())
     elif request.method == 'SET':
-        operator.format_return(operator.add_task(request.json))
+        operator(operator.add_task(request.json))
     else:
         pass
     return ''
@@ -85,7 +82,7 @@ def tasks():
 @app.route('/tasks/<task>', methods=['GET', 'UPDATE'])
 def tasks_update(task):
     if request.method == 'GET':
-        return operator.format_return(operator.get_task(task))
+        return operator(operator.return_task(task))
     
 @app.route('/bous/<bou>', methods=['GET', 'SET', 'UPDATE'])
 def bous():
@@ -97,7 +94,14 @@ def bous():
         pass
     return ''
     
-@app.route('/looking_forwardables', methods=['SET', 'GET', 'UPDATE'])
-def looking_forwardables():
+@app.route('/looking_forwardables/<bou_id>', methods=['SET', 'GET', 'UPDATE'])
+def looking_forwardables(bou_id):
+    if request.method == 'GET':
+        return operator(operator.return_looking_forwardables(bou_id))
+    elif request.method == 'SET':
+        return operator(operator.add_looking_forwardables(bou_id))
+    else:
+        pass
     return ''
+    
     
